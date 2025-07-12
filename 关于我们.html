@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 欧力雅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        
+        /* 顶部导航栏 - 粘性定位 */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.98);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        .logo-container {
+            width: 150px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .nav-center {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-right {
+            width: 150px;
+            text-align: right;
+        }
+        .nav-btn {
+            padding: 8px 20px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            font-weight: bold;
+        }
+        .language-btn {
+            padding: 8px 20px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* 关于我们内容区域 */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .about-title {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .about-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .about-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .about-image {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .about-text p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        /* 视频部分 */
+        .video-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+        
+        .video-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        .video-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 宽高比 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 历史部分 */
+        .history-section {
+            margin-top: 50px;
+        }
+        
+        .history-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 50px;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6e8efb, #a777e3);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-year {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #6e8efb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(110, 142, 251, 0.3);
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-left: 30px;
+        }
+        
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .timeline-content p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* 底部联系信息 - 与主页面一致 */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .footer-item {
+            padding: 0 15px;
+        }
+        .footer-item p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .video-container {
+                margin: 30px auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .top-bar {
+                flex-wrap: wrap;
+                padding: 10px 15px;
+            }
+            .nav-center {
+                order: 3;
+                flex: 100%;
+                margin-top: 15px;
+            }
+            .nav-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .about-container {
+                padding: 20px;
+            }
+            
+            .about-title {
+                font-size: 1.8rem;
+            }
+            
+            .video-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company logo" class="logo">
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='主页.html#products'">专业产品</button>
+                <button class="nav-btn" onclick="window.location.href='主页.html#technology'">专业技术</button>
+                <button class="nav-btn" style="font-weight: bold;">关于我们</button>
+                <button class="nav-btn" onclick="window.location.href='产品介绍.html'">产品介绍</button>
+                <button class="nav-btn" onclick="window.location.href='工艺介绍.html'">工艺介绍</button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="language-btn" onclick="window.location.href='about us.html'">English</button>
+        </div>
+    </div>
+
+    <!-- 关于我们内容 -->
+    <div class="about-container">
+        <div class="about-header">
+            <h1 class="about-title">关于欧力雅</h1>
+            <p class="about-subtitle">我们致力于提供最优质的丝网印刷解决方案，结合创新技术与传统工艺，为客户创造卓越价值</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-image">
+                <img src="外景1.JPG" alt="欧力雅工厂">
+            </div>
+            
+            <div class="about-text">
+                <h3>我们的使命</h3>
+                <p>是一家专注于薄膜开关类产品设计、样品制作及定制化生产的高新技术企业。自成立以来，始终致力于为客户提供高品质的薄膜开关解决方案，涵盖从产品设计、原材料选择、样品开发到批量生产的全流程服务。</p>
+                <p>凭借超过20年的行业经验，我们已成为电子行业中薄膜开关制造与服务的领先供应商之一，并赢得众多世界企业的信赖与合作。  </p>
+                <p>我们将发挥我们设计上的优势，结合我们丰富经验的制造团队，为客户提供质量可靠、成本效益可观的产品。</p>
+            </div>
+        </div>
+        
+        <div class="about-content reverse">
+            <div class="about-text">
+                <h3>我们的优势</h3>
+                <p><strong>经验丰富的工程团队：</strong>拥有20年以上经验的工程师和技术人员，能够解决各种复杂的印刷难题。</p>
+                <p><strong>优秀生产能力：</strong>无论是标准产品还是带元器件的复杂薄膜开关装配，我们都能提供高效、精准的定制化生产服务。  </p>
+                <p><strong>高效生产理念：</strong>我们不仅关注产品的外观与功能性，更注重材料选择和生产工艺的优化，确保每一款薄膜开关在性能、耐久性和成本效益上达到最佳平衡。</p>
+                <p><strong>严格品质保障：</strong> 我司为了打造优质的产品，特聘请专业的测试机构完成了ROHS、REACH、CP65和PAHS的检测报告。</p>
+                <p><strong>可定制化设计：</strong>欧力雅实业拥有一支经验丰富的业务开发与工程团队，能够根据客户需求提供个性化的薄膜开关设计方案。</p>
+            </div>
+            
+            <div class="about-image">
+                <img src="模切 (2).jpg" alt="车间仪器">
+            </div>
+        </div>
+        
+        <!-- 新增的Bilibili视频部分 -->
+        <div class="video-container">
+            <h3 class="video-title">企业宣传视频</h3>
+            <div class="video-wrapper">
+                <iframe 
+                    src="//player.bilibili.com/player.html?bvid=BV164THzfEsR&high_quality=1&danmaku=0" 
+                    allowfullscreen="allowfullscreen"
+                    scrolling="no"
+                    frameborder="no"
+                    sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts">
+                </iframe>
+            </div>
+        </div>
+        
+        <div class="history-section">
+            <h3 class="history-title">发展历程</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2005</div>
+                    <div class="timeline-content">
+                        <h4>公司成立</h4>
+                        <p>欧力雅在上海松江高科技园区成立，专注于精密丝网印刷技术研发。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2008</div>
+                    <div class="timeline-content">
+                        <h4>自动化生产线</h4>
+                        <p>引进全自动丝网印刷生产线，产能提升300%，精度达到±0.01mm。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-content">
+                        <h4>国际认证</h4>
+                        <p>通过ISO 9001质量管理体系认证，产品开始出口欧美市场。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2016</div>
+                    <div class="timeline-content">
+                        <h4>技术突破</h4>
+                        <p>研发精密印刷技术，成功应用于医疗设备领域。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h4>新工厂投产</h4>
+                        <p>松江新工厂投入使用，总面积达15,000平方米，年产能提升至500万件。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h4>数字化转型</h4>
+                        <p>全面实施智能制造系统，实现生产流程数字化、可视化。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部联系信息 -->
+    <div class="footer">
+        <div class="footer-container">
+            <h3 class="footer-title">用电话和邮件联系我们</h3>
+            <div class="footer-content">
+                <div class="footer-item">
+                    <h4>邮箱</h4>
+                    <p>kongxu@sholy.com.cn</p>
+                </div>
+                <div class="footer-item">
+                    <h4>地址</h4>
+                    <p>上海松江区高新技术园区沧泾路151号</p>
+                </div>
+                <div class="footer-item">
+                    <h4>电话</h4>
+                    <p>0086-021-3763 8008</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

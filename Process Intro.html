@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Intro-OLY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            padding: 0 20px 20px;
+        }
+        
+        /* Top Navigation Bar - Sticky */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .top-bar.scrolled {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .logo-container {
+            width: 150px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .nav-center {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-right {
+            width: 150px;
+            text-align: right;
+        }
+        .nav-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            font-weight: bold;
+        }
+        .language-btn {
+            padding: 8px 20px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Main Content */
+        .process-header {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+        .process-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .process-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Process Steps */
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+        .process-section {
+            margin-bottom: 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .process-step {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .process-step img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .step-content {
+            padding: 20px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .step-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .step-content p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        /* Quality Assurance */
+        .quality-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .quality-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .quality-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #6e8efb;
+        }
+        .quality-item h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .quality-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer Contact Info */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .footer-item {
+            padding: 0 15px;
+        }
+        .footer-item p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .quality-grid,
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .process-header h1 {
+                font-size: 2rem;
+            }
+            .process-header p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .quality-grid,
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .process-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company logo" class="logo">
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='主页英文.html#products'">Products</button>
+                <button class="nav-btn" onclick="window.location.href='主页英文.html#technology'">Techniques</button>
+                <button class="nav-btn" onclick="window.location.href='about us.html'">About Us</button>
+                <button class="nav-btn" onclick="window.location.href='Product Intro.html'">Product Intro</button>
+                <button class="nav-btn" style="font-weight: bold;">Process Intro</button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="language-btn" onclick="window.location.href='工艺介绍.html'">中文</button>
+        </div>
+    </div>
+
+    <!-- Process Header -->
+    <div class="process-header">
+        <h1>Process Introduction</h1>
+        <p>Discover our meticulous process that ensures precision, quality, and consistency in every product we manufacture.</p>
+    </div>
+
+    <!-- Design Process - Now with 4 steps -->
+    <div class="process-container">
+        <div class="process-section">
+            <h2 class="section-title">Design & Pre-Production</h2>
+            <div class="process-steps">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <img src="模切 (1).jpg" alt="模切1">
+                    <div class="step-content">
+                        <span class="step-number">1</span>
+                        <h3>Precision Design and Mold Manufacturing</h3>
+                        <p>Starting from customer requirements, product drawings are transformed into precision die-cutting molds using professional design software. Engineers optimize cutting solutions based on material characteristics to ensure smooth contours and rational mold structures. Whether for simple shapes or complex curves, every detail is meticulously refined, laying a solid foundation for high-quality cutting.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <img src="模切 (2).jpg" alt="模切2">
+                    <div class="step-content">
+                        <span class="step-number">2</span>
+                        <h3>Material Preparation and Precise Positioning</h3>
+                        <p>Premium raw materials are carefully selected and precisely fed via automated equipment. An advanced positioning system ensures perfect alignment between materials and molds, eliminating deviations or misplacement. Tailored adjustments to pressure, temperature, and humidity—based on material properties—optimize pre-cutting conditions, laying the ideal foundation for downstream processes.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <img src="模切 (3).jpg" alt="模切3">
+                    <div class="step-content">
+                        <span class="step-number">3</span>
+                        <h3>High-Efficiency Die Cutting and Precision Finishing</h3>
+                        <p>The high-precision die-cutting machine delivers consistent cutting pressure to ensure clean edges and burr-free results. An automated waste removal system swiftly separates finished products from scrap, significantly boosting production efficiency. For specialized requirements, various processes like hot-knife cutting or cold die-cutting are available to accommodate diverse product needs, achieving flawless reproduction of even the most complex geometries.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="process-step">
+                    <img src="模切1.jpg" alt="模切4">
+                    <div class="step-content">
+                        <span class="step-number">4</span>
+                        <h3>Rigorous Quality Inspection and Finished Product Delivery</h3>
+                        <p>Each product undergoes multiple quality inspection procedures, from dimensional accuracy to surface details, ensuring full compliance with standards. Automated sorting systems combined with manual re-inspection provide dual-layer assurance. Finished products are packaged in dust-proof and moisture-resistant materials, with customizable options available to meet specific client requirements—guaranteeing efficient delivery and worry-free end-use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Printing Process - Now with 4 steps -->
+        <div class="process-section">
+            <h2 class="section-title">Printing Process</h2>
+            <div class="process-steps">
+                <!-- Step 5 -->
+                <div class="process-step">
+                    <img src="烘干机.jpg" alt="材料烘干">
+                    <div class="step-content">
+                        <span class="step-number">5</span>
+                        <h3>材料烘干</h3>
+                        <p>Pre-printing drying is a critical pretreatment step in the production of membrane panels, primarily aimed at removing moisture, oil contaminants, or processing residues from the substrate surface. This ensures optimal adhesion and pattern precision in subsequent printing processes. By precisely controlling drying temperature and duration, the surface tension of the substrate can be effectively enhanced, preventing issues such as ink bleeding, poor adhesion, or bubble formation during printing.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 6 -->
+                <div class="process-step">
+                    <img src="原材料仓库.jpg" alt="油墨调色工序">
+                    <div class="step-content">
+                        <span class="step-number">6</span>
+                        <h3>Ink Color Mixing Process</h3>
+                        <p>The ink color matching process for membrane panels mainly includes: After receiving customer color samples, professional equipment is used to collect standard color data; appropriate inks are selected and formulated based on substrate characteristics; the formula is optimized through proofing verification and color difference detection; after finalizing the formula, ink viscosity is adjusted and standard processes are established; during production, strict control is implemented for first-piece inspection and sampling inspection while monitoring environmental conditions; finally, a color database is created to store color matching records, with regular maintenance of testing equipment to ensure color accuracy and batch stability.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 7 -->
+                <div class="process-step">
+                    <img src="印刷.jpg" alt="印刷工序">
+                    <div class="step-content">
+                        <span class="step-number">7</span>
+                        <h3>Membrane Panel Printing Process</h3>
+                        <p>We employ internationally advanced silver paste printing technology to produce high-precision conductive circuits on various flexible film substrates. This mature process, incorporating professional surface treatment, precision printing control, and strict quality management, ensures excellent conductivity and long-term reliability. With stable process performance and extensive application experience, we have provided premium membrane switches, flexible circuits, and other product solutions to numerous electronic device manufacturers. From product design to mass production, we offer professional technical support and customized services to meet diverse application requirements across different scenarios.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 8 -->
+                <div class="process-step">
+                    <img src="点灯机.jpg" alt="点灯工艺">
+                    <div class="step-content">
+                        <span class="step-number">8</span>
+                        <h3>Membrane Panel Backlighting Process</h3>
+                        <p>The backlighting process for membrane panels is a critical manufacturing step that integrates LED or other light-emitting components into the panel structure. This process begins with precisely positioning LED chips or backlight modules at designated locations on the panel using high-precision placement equipment. Electrical connections between the light-emitting components and conductive circuits are then established through reliable methods such as conductive silver adhesive bonding or thermal compression welding.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Finishing Process - Now with 4 steps -->
+        <div class="process-section">
+            <h2 class="section-title">Finishing & Quality Control</h2>
+            <div class="process-steps">
+                <!-- Step 9 -->
+                <div class="process-step">
+                    <img src="实验1.jpg" alt="实验1">
+                    <div class="step-content">
+                        <span class="step-number">9</span>
+                        <h3>reliability testing</h3>
+                        <p>In our professional laboratory, membrane switches undergo rigorous reliability testing. We simulate real-world operating conditions to conduct comprehensive evaluations—including mechanical lifespan, environmental adaptability, and electrical performance—ensuring durable and stable product quality. All test data is recorded and analyzed in real-time, with strict quality control measures providing verifiable performance guarantees.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 10 -->
+                <div class="process-step">
+                    <img src="组装1.jpg" alt="组装">
+                    <div class="step-content">
+                        <span class="step-number">10</span>
+                        <h3>Precision Product Assembly</h3>
+                        <p>In our state-of-the-art assembly facility, products are manufactured under strictly standardized operating procedures. Skilled technicians work in tandem with automated equipment to ensure precision assembly of every component. Through multiple quality inspection checkpoints, we guarantee the reliability and consistency of finished products, delivering uncompromising quality assurance.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 11 -->
+                <div class="process-step">
+                    <img src="检验车间.jpg" alt="检验">
+                    <div class="step-content">
+                        <span class="step-number">11</span>
+                        <h3>Visual Inspection</h3>
+                        <p>In the standardized quality inspection area, operators must wear cleanroom gloves and inspect the products under professional testing light sources. They shall hold the products in a standardized manner and conduct detailed visual examinations from multiple angles. Any products with noticeable scratches, visible stains or foreign matter, detectable dents/deformation, or uneven coatings shall be immediately classified as non-conforming items.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 12 -->
+                <div class="process-step">
+                    <img src="电检.jpg" alt="电检">
+                    <div class="step-content">
+                        <span class="step-number">12</span>
+                        <h3>Electrical Testing</h3>
+                        <p>During electrical testing, we conduct comprehensive performance evaluations using professional equipment to verify all parameters meet design specifications. Key tests include continuity checks, insulation resistance measurements, and voltage withstand tests, accurately identifying issues such as short circuits, open circuits, or signal abnormalities. All non-conforming products are automatically flagged and isolated, ensuring the reliability and safety of outgoing products.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quality Assurance -->
+    <div class="quality-section">
+        <h2 class="section-title">Our Quality Assurance Commitment</h2>
+        <div class="quality-grid">
+            <div class="quality-item">
+                <div class="quality-icon">🔍</div>
+                <h3>100% Full Inspection</h3>
+                <p>Each product undergoes full inspection before shipment to minimize defect escape rate.</p>
+            </div>
+            <div class="quality-item">
+                <div class="quality-icon">📊</div>
+                <h3>Process Control</h3>
+                <p>Adopt in-process quality monitoring to ensure consistent production quality.</p>
+            </div>
+            <div class="quality-item">
+                <div class="quality-icon">📝</div>
+                <h3>Complete Documentation</h3>
+                <p>Every production batch has complete and traceable batch records.</p>
+            </div>
+            <div class="quality-item">
+                <div class="quality-icon">🔄</div>
+                <h3>Continuous Improvement</h3>
+                <p>Regular process reviews and technological upgrades for continuous quality improvement</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Contact Info -->
+    <div class="footer">
+        <div class="footer-container">
+            <h3 class="footer-title">Contact us via phone/email</h3>
+            <div class="footer-content">
+                <div class="footer-item">
+                    <h4>E-mail</h4>
+                    <p>kongxu@sholy.com.cn</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Address</h4>
+                    <p>No. 151, Cangjing Road, Songjiang High-tech Park, Shanghai.</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Phone number</h4>
+                    <p>0086-021-3763 8008</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', function() {
+            const topBar = document.querySelector('.top-bar');
+            if (window.scrollY > 10) {
+                topBar.classList.add('scrolled');
+            } else {
+                topBar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

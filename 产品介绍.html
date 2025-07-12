@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品介绍 - 欧力雅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            padding: 0 20px 20px;
+        }
+        
+        /* 顶部导航栏 - 粘性定位 */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .top-bar.scrolled {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .logo-container {
+            width: 150px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .nav-center {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-right {
+            width: 150px;
+            text-align: right;
+        }
+        .nav-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            font-weight: bold;
+        }
+        .language-btn {
+            padding: 8px 20px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* 主要内容样式 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .product-intro {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .product-intro h3 {
+            font-size: 1.5rem;
+            color: #444;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        .product-intro h3:after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .product-intro p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 对称特性网格 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .feature-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card h4 span {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        /* 对称图片轮换展示区 */
+        .image-carousels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .carousel-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .carousel-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .carousel {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .carousel-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .carousel-caption {
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 2;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* 左右切换按钮样式 */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .carousel-container:hover .carousel-btn {
+            opacity: 1;
+        }
+        
+        .carousel-btn.prev {
+            left: 15px;
+        }
+        
+        .carousel-btn.next {
+            right: 15px;
+        }
+        
+        /* 质量保证部分 */
+        .quality-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+        
+        .quality-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        
+        .quality-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .quality-item span {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* 底部信息 */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 60px 20px;
+            margin-top: 80px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .footer-item {
+            padding: 0 20px;
+        }
+        .footer-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .footer-item p {
+            margin: 0;
+            line-height: 1.8;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1000px) {
+            .feature-grid, .image-carousels, .quality-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-container {
+                padding: 30px;
+            }
+            .top-bar {
+                flex-wrap: wrap;
+            }
+            .nav-center {
+                order: 3;
+                flex: 100%;
+                margin-top: 15px;
+            }
+            .nav-buttons {
+                justify-content: center;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .image-carousels {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-intro p {
+                text-align: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .feature-grid, .image-carousels, .quality-list {
+                grid-template-columns: 1fr;
+            }
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            .carousel {
+                height: 200px;
+            }
+            .carousel-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            .content-container {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="公司logo" class="logo">
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='主页.html#products'">专业产品</button>
+                <button class="nav-btn" onclick="window.location.href='主页.html#technology'">专业技术</button>
+                <button class="nav-btn" onclick="window.location.href='关于我们.html'">关于我们</button>
+                <button class="nav-btn" style="font-weight: bold;">产品介绍</button>
+                <button class="nav-btn" onclick="window.location.href='工艺介绍.html'">工艺介绍</button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="language-btn" onclick="window.location.href='Product Intro.html'">English</button>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="content-container">
+        <h2 class="section-title">我们的产品介绍</h2>
+        
+        <div class="product-intro">
+            <h3>关于我们的薄膜开关</h3>
+            <p>欧力雅专业生产用于医疗、工业控制、消费电子和汽车应用等各种行业的高质量薄膜开关。我们的产品以耐用性、精确度和出色的触觉反馈而闻名。</p>
+            <p>凭借20多年的薄膜开关技术经验，我们开发了创新的解决方案，满足最严格的规格要求，同时保持有竞争力的价格。</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><span>✔️</span> 定制设计</h4>
+                <p>我们与客户密切合作，创建完全符合其产品要求的薄膜开关，包括定制形状、尺寸和图形覆盖层。</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> 材料选择</h4>
+                <p>仅使用聚碳酸酯、聚酯和硅橡胶等高级材料，确保产品的长寿命和性能。</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> 触觉选项</h4>
+                <p>提供从清脆的金属弹片到平滑无触感的各种触觉反馈选项，以适应不同的用户偏好。</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> 环境耐受性</h4>
+                <p>我们的薄膜开关设计用于承受潮湿、化学品和极端温度等恶劣环境。</p>
+            </div>
+        </div>
+        
+        <div class="product-intro">
+            <h3>产品系列展示</h3>
+            <p>我们精选了以下六类产品进行展示，每组图片可独立轮换查看不同型号：</p>
+        </div>
+        
+        <div class="image-carousels">
+            <!-- 第一组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel1">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="无手感薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="无手感薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="无手感薄膜开关">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">无手感薄膜开关</div>
+            </div>
+            
+            <!-- 第二组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel2">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="电容式薄膜开关.jpg" alt="电容式薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="电容2.jpg" alt="电容式薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="电容3.jpg" alt="电容式薄膜开关">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">电容式薄膜开关</div>
+            </div>
+            
+            <!-- 第三组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel3">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="有手感.jpg" alt="有手感薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="有手感2.jpg" alt="有手感薄膜开关">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="有手感薄膜开关.jpg" alt="有手感薄膜开关">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">有手感薄膜开关</div>
+            </div>
+            
+            <!-- 第四组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel4">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="彩晶面板">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="彩晶面板">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="彩晶面板">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">彩晶面板</div>
+            </div>
+            
+            <!-- 第五组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel5">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="线路.jpg" alt="线路">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="线路2.jpg" alt="线路">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="线路3.jpg" alt="线路">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">线路</div>
+            </div>
+            
+            <!-- 第六组轮换 -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel6">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="面板1.jpg" alt="薄膜面板">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="面板2.jpg" alt="薄膜面板">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="薄膜面板.jpg" alt="薄膜面板">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">薄膜面板</div>
+            </div>
+        </div>
+        
+        <div class="quality-section">
+            <h3>质量保证</h3>
+            <p>每个薄膜开关都经过严格测试，确保符合我们的高标准：</p>
+            
+            <div class="quality-list">
+                <div class="quality-item">
+                    <span>🔬</span>
+                    <div>
+                        <h4>寿命测试</h4>
+                        <p>100万次以上按压测试</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>🌡️</span>
+                    <div>
+                        <h4>环境应力测试</h4>
+                        <p>极端温度、湿度条件下测试</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>⚡</span>
+                    <div>
+                        <h4>电气性能验证</h4>
+                        <p>确保电路稳定可靠</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>👁️</span>
+                    <div>
+                        <h4>视觉和触觉检查</h4>
+                        <p>人工+机器双重检验</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>📏</span>
+                    <div>
+                        <h4>尺寸精度检查</h4>
+                        <p>误差控制在±0.1mm内</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>🧪</span>
+                    <div>
+                        <h4>化学耐受性测试</h4>
+                        <p>抗腐蚀性能检测</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部联系信息 -->
+    <div class="footer">
+        <div class="footer-container">
+            <h3 class="footer-title">用电话和邮件联系我们</h3>
+            <div class="footer-content">
+                <div class="footer-item">
+                    <h4>邮箱</h4>
+                    <p>kongxu@sholy.com.cn</p>
+                </div>
+                <div class="footer-item">
+                    <h4>地址</h4>
+                    <p>上海松江区高新技术园区沧泾路151号</p>
+                </div>
+                <div class="footer-item">
+                    <h4>电话</h4>
+                    <p>0086-021-3763 8008</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化所有轮换展示
+        function initCarousels() {
+            const carousels = document.querySelectorAll('.carousel');
+            
+            carousels.forEach((carousel, carouselIndex) => {
+                const slides = carousel.querySelector('.carousel-slides');
+                const dots = carousel.querySelectorAll('.carousel-dot');
+                const prevBtn = carousel.querySelector('.prev');
+                const nextBtn = carousel.querySelector('.next');
+                const slideCount = carousel.querySelectorAll('.carousel-slide').length;
+                let currentIndex = 0;
+                let interval;
+                
+                // 更新轮换位置
+                function updateSlide() {
+                    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    
+                    // 更新指示点状态
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
+                }
+                
+                // 下一张
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % slideCount;
+                    updateSlide();
+                }
+                
+                // 上一张
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                    updateSlide();
+                }
+                
+                // 自动轮换
+                function startAutoSlide() {
+                    interval = setInterval(nextSlide, 3000);
+                }
+                
+                // 停止自动轮换
+                function stopAutoSlide() {
+                    clearInterval(interval);
+                }
+                
+                // 指示点点击事件
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        updateSlide();
+                    });
+                });
+                
+                // 上一张按钮点击事件
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+                
+                // 下一张按钮点击事件
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+                
+                // 鼠标悬停暂停自动轮换
+                carousel.addEventListener('mouseenter', stopAutoSlide);
+                carousel.addEventListener('mouseleave', startAutoSlide);
+                
+                // 启动自动轮换
+                startAutoSlide();
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化轮换展示
+            initCarousels();
+            
+            // 滚动时导航栏阴影效果
+            window.addEventListener('scroll', function() {
+                const topBar = document.querySelector('.top-bar');
+                if (window.scrollY > 10) {
+                    topBar.classList.add('scrolled');
+                } else {
+                    topBar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

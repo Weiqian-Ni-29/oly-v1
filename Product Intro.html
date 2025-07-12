@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Intro-OLY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f2f5;
+            padding: 0 20px 20px;
+        }
+        
+        /* Top Navigation Bar - Sticky */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .top-bar.scrolled {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .logo-container {
+            width: 150px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .nav-center {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-right {
+            width: 150px;
+            text-align: right;
+        }
+        .nav-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            font-weight: bold;
+        }
+        .language-btn {
+            padding: 8px 20px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Main Content Styles */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .product-intro {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .product-intro h3 {
+            font-size: 1.5rem;
+            color: #444;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        .product-intro h3:after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .product-intro p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Symmetrical Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .feature-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card h4 span {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        /* Symmetrical Image Carousels */
+        .image-carousels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .carousel-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .carousel-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .carousel {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .carousel-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .carousel-caption {
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 2;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* Navigation Buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .carousel-container:hover .carousel-btn {
+            opacity: 1;
+        }
+        
+        .carousel-btn.prev {
+            left: 15px;
+        }
+        
+        .carousel-btn.next {
+            right: 15px;
+        }
+        
+        /* Quality Assurance Section */
+        .quality-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+        
+        .quality-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        
+        .quality-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .quality-item span {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* Footer Information */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 60px 20px;
+            margin-top: 80px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .footer-item {
+            padding: 0 20px;
+        }
+        .footer-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .footer-item p {
+            margin: 0;
+            line-height: 1.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .feature-grid, .image-carousels, .quality-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-container {
+                padding: 30px;
+            }
+            .top-bar {
+                flex-wrap: wrap;
+            }
+            .nav-center {
+                order: 3;
+                flex: 100%;
+                margin-top: 15px;
+            }
+            .nav-buttons {
+                justify-content: center;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .image-carousels {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-intro p {
+                text-align: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .feature-grid, .image-carousels, .quality-list {
+                grid-template-columns: 1fr;
+            }
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            .carousel {
+                height: 200px;
+            }
+            .carousel-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            .content-container {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company logo" class="logo">
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='主页英文.html#products'">Products</button>
+                <button class="nav-btn" onclick="window.location.href='主页英文.html#technology'">Techniques</button>
+                <button class="nav-btn" onclick="window.location.href='about us.html'">About Us</button>
+                <button class="nav-btn" style="font-weight: bold;">Product Intro</button>
+                <button class="nav-btn" onclick="window.location.href='Process Intro.html'">Process Intro</button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="language-btn" onclick="window.location.href='产品介绍.html'">中文</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+        <h2 class="section-title">Our Product Introduction</h2>
+        
+        <div class="product-intro">
+            <h3>About Our Membrane Switches</h3>
+            <p>Oliya specializes in manufacturing high-quality membrane switches for various industries including medical, industrial control, consumer electronics, and automotive applications. Our products are renowned for their durability, precision, and excellent tactile feedback.</p>
+            <p>With over 20 years of experience in membrane switch technology, we have developed innovative solutions that meet the most stringent specifications while maintaining competitive pricing.</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><span>✔️</span> Custom Design</h4>
+                <p>We work closely with clients to create membrane switches that perfectly match their product requirements, including custom shapes, sizes, and graphic overlays.</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> Material Selection</h4>
+                <p>Using only premium materials like polycarbonate, polyester, and silicone rubber to ensure long product life and performance.</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> Tactile Options</h4>
+                <p>Offering various tactile feedback options from crisp metal domes to smooth non-tactile responses to suit different user preferences.</p>
+            </div>
+            <div class="feature-card">
+                <h4><span>✔️</span> Environmental Resistance</h4>
+                <p>Our membrane switches are designed to withstand harsh environments including moisture, chemicals, and extreme temperatures.</p>
+            </div>
+        </div>
+        
+        <div class="product-intro">
+            <h3>Product Series Showcase</h3>
+            <p>We have selected the following six product categories for display, with each group of images independently rotatable to view different models:</p>
+        </div>
+        
+        <div class="image-carousels">
+            <!-- First Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel1">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="Non-Tactile Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="Non-Tactile Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="无手感薄膜开关.jpg" alt="Non-Tactile Membrane Switch">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Non-Tactile Membrane Switch</div>
+            </div>
+            
+            <!-- Second Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel2">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="电容2.jpg" alt="Capacitive Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="电容式薄膜开关.jpg" alt="Capacitive Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="电容2.jpg" alt="Capacitive Membrane Switch">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Capacitive Membrane Switch</div>
+            </div>
+            
+            <!-- Third Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel3">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="有手感.jpg" alt="Tactile Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="有手感2.jpg" alt="Tactile Membrane Switch">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="有手感薄膜开关.jpg" alt="Tactile Membrane Switch">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Tactile Membrane Switch</div>
+            </div>
+            
+            <!-- Fourth Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel4">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="Crystal Panel">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="Crystal Panel">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="彩晶面板.jpg" alt="Crystal Panel">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Crystal Panel</div>
+            </div>
+            
+            <!-- Fifth Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel5">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="线路.jpg" alt="Circuit">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="线路2.jpg" alt="Circuit">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="线路.jpg" alt="Circuit">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Circuit</div>
+            </div>
+            
+            <!-- Sixth Carousel -->
+            <div class="carousel-container">
+                <div class="carousel" id="carousel6">
+                    <button class="carousel-btn prev">❮</button>
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <img src="面板1.jpg" alt="Membrane Panel">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="面板2.jpg" alt="Membrane Panel">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="薄膜面板.jpg" alt="Membrane Panel">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">❯</button>
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active" data-index="0"></div>
+                        <div class="carousel-dot" data-index="1"></div>
+                        <div class="carousel-dot" data-index="2"></div>
+                    </div>
+                </div>
+                <div class="carousel-caption">Membrane Panel</div>
+            </div>
+        </div>
+        
+        <div class="quality-section">
+            <h3>Quality Assurance</h3>
+            <p>Each membrane switch undergoes rigorous testing to ensure it meets our high standards:</p>
+            
+            <div class="quality-list">
+                <div class="quality-item">
+                    <span>🔬</span>
+                    <div>
+                        <h4>Life Testing</h4>
+                        <p>Over 1 million press tests</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>🌡️</span>
+                    <div>
+                        <h4>Environmental Stress Testing</h4>
+                        <p>Testing under extreme temperature and humidity</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>⚡</span>
+                    <div>
+                        <h4>Electrical Performance Verification</h4>
+                        <p>Ensuring circuit stability and reliability</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>👁️</span>
+                    <div>
+                        <h4>Visual and Tactile Inspection</h4>
+                        <p>Dual inspection by human and machine</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>📏</span>
+                    <div>
+                        <h4>Dimensional Accuracy Check</h4>
+                        <p>Error controlled within ±0.1mm</p>
+                    </div>
+                </div>
+                <div class="quality-item">
+                    <span>🧪</span>
+                    <div>
+                        <h4>Chemical Resistance Test</h4>
+                        <p>Corrosion resistance testing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Information -->
+    <div class="footer">
+        <div class="footer-container">
+            <h3 class="footer-title">Contact Us by Phone or Email</h3>
+            <div class="footer-content">
+                <div class="footer-item">
+                    <h4>Email</h4>
+                    <p>kongxu@sholy.com.cn</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Address</h4>
+                    <p>No.151, Cangjing Road, Songjiang High-Tech Park, Shanghai</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Phone</h4>
+                    <p>0086-021-3763 8008</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize all carousels
+        function initCarousels() {
+            const carousels = document.querySelectorAll('.carousel');
+            
+            carousels.forEach((carousel, carouselIndex) => {
+                const slides = carousel.querySelector('.carousel-slides');
+                const dots = carousel.querySelectorAll('.carousel-dot');
+                const prevBtn = carousel.querySelector('.prev');
+                const nextBtn = carousel.querySelector('.next');
+                const slideCount = carousel.querySelectorAll('.carousel-slide').length;
+                let currentIndex = 0;
+                let interval;
+                
+                // Update slide position
+                function updateSlide() {
+                    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    
+                    // Update dot indicators
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
+                }
+                
+                // Next slide
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % slideCount;
+                    updateSlide();
+                }
+                
+                // Previous slide
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                    updateSlide();
+                }
+                
+                // Auto slide
+                function startAutoSlide() {
+                    interval = setInterval(nextSlide, 3000);
+                }
+                
+                // Stop auto slide
+                function stopAutoSlide() {
+                    clearInterval(interval);
+                }
+                
+                // Dot click event
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        updateSlide();
+                    });
+                });
+                
+                // Previous button click event
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+                
+                // Next button click event
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+                
+                // Pause auto slide on hover
+                carousel.addEventListener('mouseenter', stopAutoSlide);
+                carousel.addEventListener('mouseleave', startAutoSlide);
+                
+                // Start auto slide
+                startAutoSlide();
+            });
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize carousels
+            initCarousels();
+            
+            // Navbar shadow effect on scroll
+            window.addEventListener('scroll', function() {
+                const topBar = document.querySelector('.top-bar');
+                if (window.scrollY > 10) {
+                    topBar.classList.add('scrolled');
+                } else {
+                    topBar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home-OLY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            padding: 0 20px 20px;
+        }
+        
+        /* Top Navigation Bar - Sticky */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .top-bar.scrolled {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .logo-container {
+            width: 150px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .nav-center {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-right {
+            width: 150px;
+            text-align: right;
+        }
+        .nav-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            font-weight: bold;
+        }
+        .language-btn {
+            padding: 8px 20px;
+            background: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Slider Styles */
+        .slider {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        .slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .slider-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            max-width: 80%;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        .slider-text h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .slider-text p {
+            font-size: 1rem;
+        }
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider-dot.active {
+            background: white;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .slider-btn:hover {
+            background: rgba(0,0,0,0.5);
+        }
+        .prev {
+            left: 20px;
+        }
+        .next {
+            right: 20px;
+        }
+        
+        /* Main Content Area */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        /* Reasons Title */
+        .reasons-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 40px auto 20px;
+            color: #333;
+            max-width: 1200px;
+        }
+        
+        /* Card Area - Modified */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            min-width: 0;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .card .info {
+            padding: 25px 15px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .card h3 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        .card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Products and Technology Section */
+        .section {
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .technology-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .product-card:active {
+            transform: translateY(-2px) scale(0.98);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .product-card img {
+            width: 100%;
+            height: 225px;
+            object-fit: cover;
+        }
+        .product-card .info {
+            padding: 15px;
+            text-align: center;
+        }
+        .product-card h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        .product-card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Footer Contact Info */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .footer-item {
+            padding: 0 15px;
+        }
+        .footer-item p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .gallery, .products-grid, .technology-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .top-bar {
+                flex-wrap: wrap;
+            }
+            .nav-center {
+                order: 3;
+                flex: 100%;
+                margin-top: 15px;
+            }
+            .nav-buttons {
+                justify-content: center;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 600px) {
+            .gallery, .products-grid, .technology-grid {
+                grid-template-columns: 1fr;
+            }
+            .slide img {
+                height: 250px;
+            }
+            .slider-text h2 {
+                font-size: 1.5rem;
+            }
+            .slider-text p {
+                font-size: 0.9rem;
+            }
+            .reasons-title {
+                font-size: 1.8rem;
+            }
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company logo" class="logo">
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='#products'">Products</button>
+                <button class="nav-btn" onclick="window.location.href='#technology'">Techniques</button>
+                <button class="nav-btn" onclick="window.location.href='about us.html'">About Us</button>
+                <button class="nav-btn" onclick="window.location.href='Product Intro.html'">Product Intro</button>
+                <button class="nav-btn" onclick="window.location.href='Process Intro.html'">Process Intro</button>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="language-btn" onclick="window.location.href='主页.html'">中文</button>
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider">
+        <div class="slides">
+            <div class="slide">
+                <img src="印刷.jpg" alt="Slider placeholder">
+                <div class="slider-text">
+                    <h2>Screen film printing, find your best partner at OLY</h2>
+                    <p>Driven by productivity, responsiveness, and uncompromising quality assurance</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="模切 (1).jpg" alt="Slider placeholder">
+                <div class="slider-text">
+                    <h2>Screen film printing, find your best partner at OLY</h2>
+                    <p>Driven by productivity, responsiveness, and uncompromising quality assurance</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="电检.jpg" alt="Slider placeholder">
+                <div class="slider-text">
+                    <h2>Screen film printing, find your best partner at OLY</h2>
+                    <p>Driven by productivity, responsiveness, and uncompromising quality assurance</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="实验2.jpg" alt="Slider placeholder">
+                <div class="slider-text">
+                    <h2>Screen film printing, find your best partner at OLY</h2>
+                    <p>Driven by productivity, responsiveness, and uncompromising quality assurance</p>
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn prev">❮</button>
+        <button class="slider-btn next">❯</button>
+        <div class="slider-nav">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>Featured Products</h1>
+        <p>Our Core Advantages</p>
+    </div>
+    
+    <!-- Reasons Title -->
+    <div class="reasons-title">Why Choose Us?</div>
+
+    <!-- Four Cards - Modified -->
+    <div class="gallery">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="info">
+                <span class="icon">👩‍🏫</span>
+                <h3>Unmatched Expertise</h3>
+                <p>Decades of experience in precision screen printing, delivering flawless results every time.</p>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="info">
+                <span class="icon">⚙️</span>
+                <h3>Advanced Technology</h3>
+                <p>We utilize cutting-edge equipment for superior print quality and consistency.</p>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="info">
+                <span class="icon">🎨</span>
+                <h3>Customization at Scale</h3>
+                <p>Tailored solutions to meet unique design and production needs, large or small.</p>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="info">
+                <span class="icon">⏰</span>
+                <h3>Reliability & Timeliness</h3>
+                <p>On-time delivery with consistent quality, ensuring your projects stay on track.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="section" id="products">
+        <h2 class="section-title">Products</h2>
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="无手感薄膜开关.jpg" alt="Non-tactile Membrane Switch">
+                <div class="info">
+                    <h3>Non-tactile Membrane Switch</h3>
+                    <p>Membrane Switch with No Tactile Feedback When Pressed</p>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="电容式薄膜开关.jpg" alt="Capacitive Membrane Switch">
+                <div class="info">
+                    <h3>Capacitive Membrane Switch</h3>
+                    <p>Optically Clear Tactile Membrane Switch when emphasizing visual clarity</p>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="有手感薄膜开关.jpg" alt="Tactile Membrane Switch">
+                <div class="info">
+                    <h3>Tactile Membrane Switch</h3>
+                    <p>Conventional Membrane Switch with Distinct Tactile Feedback</p>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="彩晶面板.jpg" alt="Prism-effect Membrane Panel">
+                <div class="info">
+                    <h3>Prism-effect Membrane Panel</h3>
+                    <p>High-clarity Color Membrane Panel with Optical-grade Transparency</p>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="线路.jpg" alt="Circuit Traces">
+                <div class="info">
+                    <h3>Circuit Traces</h3>
+                    <p>Membrane Switch Circuitry</p>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card" onclick="window.location.href='Product Intro.html'">
+                <img src="薄膜面板.jpg" alt="Membrane Panel">
+                <div class="info">
+                    <h3>Membrane Panel</h3>
+                    <p>Non-conductive Membrane Overlay</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Section -->
+    <div class="section" id="technology">
+        <h2 class="section-title">Techniques</h2>
+        <div class="technology-grid">
+            <!-- Row 1 -->
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="模切1.jpg" alt="die-cutting">
+                <div class="info">
+                    <h3>Die-Cutting Production Area</h3>
+                    <p>This is the area where die cutting is performed.</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="组装1.jpg" alt="Assembly">
+                <div class="info">
+                    <h3>Assembly Workshop</h3>
+                    <p>This is the area where product components are assembled.</p>
+                </div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="实验1.jpg" alt="test">
+                <div class="info">
+                    <h3>Laboratory</h3>
+                    <p>Area for membrane switch reliability testing</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="原材料仓库.jpg" alt="Raw Material Warehouse">
+                <div class="info">
+                    <h3>Raw Material Warehouse</h3>
+                    <p>This is the warehouse where raw materials are stored</p>
+                </div>
+            </div>
+            
+            <!-- Row 3 -->
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="检验车间.jpg" alt="Inspection Department">
+                <div class="info">
+                    <h3>Inspection Workshop</h3>
+                    <p>This is the designated area where all products undergo quality inspections before shipment</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="window.location.href='Process Intro.html'">
+                <img src="https://source.unsplash.com/random/400x225/?technology6" alt="Printing Department">
+                <div class="info">
+                    <h3>Printing Department</h3>
+                    <p>This is the central production area where all printed materials are manufactured.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Contact Info -->
+    <div class="footer">
+        <div class="footer-container">
+            <h3 class="footer-title">Contact us via phone/email</h3>
+            <div class="footer-content">
+                <div class="footer-item">
+                    <h4>E-mail</h4>
+                    <p>kongxu@sholy.com.cn</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Address</h4>
+                    <p>No. 151, Cangjing Road, Songjiang High-tech Park, Shanghai.</p>
+                </div>
+                <div class="footer-item">
+                    <h4>Phone number</h4>
+                    <p>0086-021-3763 8008</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelector('.slides');
+            const slideItems = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            let currentIndex = 0;
+            const slideCount = slideItems.length;
+            
+            // Auto-slide
+            let interval = setInterval(nextSlide, 5000);
+            
+            // Update slide position
+            function updateSlide() {
+                slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update dot indicators
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+                
+                // Reset auto-slide timer
+                clearInterval(interval);
+                interval = setInterval(nextSlide, 5000);
+            }
+            
+            // Next slide
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateSlide();
+            }
+            
+            // Previous slide
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateSlide();
+            }
+            
+            // Button events
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Dot click events
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateSlide();
+                });
+            });
+            
+            // Pause auto-slide on hover
+            const slider = document.querySelector('.slider');
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                interval = setInterval(nextSlide, 5000);
+            });
+
+            // Add shadow to navbar on scroll
+            window.addEventListener('scroll', function() {
+                const topBar = document.querySelector('.top-bar');
+                if (window.scrollY > 10) {
+                    topBar.classList.add('scrolled');
+                } else {
+                    topBar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
